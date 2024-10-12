@@ -23,13 +23,13 @@
 <body class="hold-transition login-page">
 <div class="login-box">
     <div class="login-logo">
-        <a href="{{ route('/') }}">@lang('dashboard.Elryad') @lang('dashboard.Dashboard')</a>
+        <a href="{{ route('employee./') }}">@lang('dashboard.Employee') @lang('dashboard.Dashboard')</a>
     </div>
     <!-- /.login-logo -->
     <div class="card">
         <div class="card-body login-card-body">
             <p class="login-box-msg">@lang('dashboard.Login')</p>
-            <form action="{{ route('auth.login') }}" method="post">
+            <form action="{{ route('employee.auth.login') }}" method="post">
                 @csrf
                 <div class="input-group mb-3">
                     <input name="email" type="email" class="form-control" placeholder="@lang('dashboard.Email')">
@@ -63,10 +63,6 @@
                     <!-- /.col -->
                 </div>
             </form>
-
-            <p class="mb-1">
-                <a href="#">@lang('dashboard.I forgot my password')</a>
-            </p>
         </div>
         <!-- /.login-card-body -->
     </div>

@@ -19,47 +19,39 @@ use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         using: function () {
-            if (app()->isProduction()) {
-                Route::group([
-                    'prefix' => 'api',
-                    'middleware' => ['api', 'localize-api'],
-                    'domain' => env('PRODUCTION_API_SUBDOMAIN')
-                ], function () {
-                    Route::prefix('v1')->group(function () {
-                        Route::prefix('website')->group(base_path('routes/api/v1/website.php'));
-                        Route::prefix('mobile')->group(base_path('routes/api/v1/mobile.php'));
-                        Route::prefix('dashboard')->group(base_path('routes/api/v1/dashboard.php'));
-                    });
-                });
-
                 Route::middleware('web')
                     ->group(base_path('routes/web.php'));
 
                 Route::middleware('web')
-                    ->domain('PRODUCTION_DASHBOARD_SUBDOMAIN')
-                    ->group(base_path('routes/dashboard.php'));
-            } else {
-                Route::group(['prefix' => 'api', 'middleware' => ['api', 'localize-api']], function () {
-                    Route::prefix('v1')->group(function () {
-                        Route::prefix('website')->group(base_path('routes/api/v1/website.php'));
-                        Route::prefix('mobile')->group(base_path('routes/api/v1/mobile.php'));
-                        Route::prefix('dashboard')->group(base_path('routes/api/v1/dashboard.php'));
-                    });
-                });
+                    ->as('manager.')
+                    ->prefix('manager')
+                    ->group(base_path('routes/manager.php'));
 
                 Route::middleware('web')
-                    ->group(base_path('routes/web.php'));
-
-                Route::middleware('web')
-                    ->group(base_path('routes/dashboard.php'));
-            }
+                    ->as('employee.')
+                    ->prefix('employee')
+                    ->group(base_path('routes/employee.php'));
         },
         commands: __DIR__.'/../routes/console.php',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->alias([
-            'localize-api' => LocalizeApi::class,
-        ]);
+        $middleware->redirectUsersTo(function (Request $request) {
+            if (auth('manager')->check()) {
+                return route('manager./');
+            }
+            if (auth('employee')->check()) {
+                return route('employee./');
+            }
+        });
+
+        $middleware->redirectGuestsTo(function (Request $request) {
+//            if ($request->is('manager/*')) {
+//                return route('manager.auth._login');
+//            }
+//            if ($request->is(   'employee/*')) {
+//                return route('employee.auth._login');
+//            }
+        });
     })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->renderable(function (NotFoundHttpException $e, $request) {
@@ -88,7 +80,12 @@ return Application::configure(basePath: dirname(__DIR__))
                 if ($request->expectsJson()) {
                     return Response::fail(status: Http::UNAUTHORIZED, message: 'Unauthenticated');
                 } else {
-                    return redirect()->route('auth.login');
+                    if ($request->is('manager', 'manager/*')) {
+                        return redirect()->route('manager.auth._login');
+                    }
+                    if ($request->is(   'employee', 'employee/*')) {
+                        return redirect()->route('employee.auth._login');
+                    }
                 }
             }
 

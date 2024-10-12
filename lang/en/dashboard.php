@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'Employee' => 'Employee',
     'Elryad' => 'Elryad',
     'Dashboard' => 'Dashboard',
     'Login' => 'Login',
