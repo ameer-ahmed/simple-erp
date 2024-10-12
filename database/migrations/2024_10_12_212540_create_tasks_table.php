@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->longText('description');
+            $table->foreignId('manager_id')->constrained()->restrictOnDelete()->cascadeOnUpdate();
+            $table->foreignId('employee_id')->constrained()->restrictOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });
     }

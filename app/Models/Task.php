@@ -7,4 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Task extends Model
 {
     protected $guarded = [];
+
+    public function manager()
+    {
+        return $this->belongsTo(Manager::class);
+    }
+
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class);
+    }
 }
