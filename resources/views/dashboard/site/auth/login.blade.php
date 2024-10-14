@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>@lang('dashboard.tasera') | @lang('dashboard.Dashboard') | @lang('titles.Login')</title>
+    <title>@lang('dashboard.Simple ERP') | @lang('dashboard.Dashboard') | @lang('titles.Login')</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -23,16 +23,16 @@
 <body class="hold-transition login-page">
 <div class="login-box">
     <div class="login-logo">
-        <a href="{{ route('employee./') }}">@lang('dashboard.Employee') @lang('dashboard.Dashboard')</a>
+        <a href="{{ route($guard.'./') }}">@lang('dashboard.'.ucfirst($guard)) @lang('dashboard.Dashboard')</a>
     </div>
     <!-- /.login-logo -->
     <div class="card">
         <div class="card-body login-card-body">
             <p class="login-box-msg">@lang('dashboard.Login')</p>
-            <form action="{{ route('employee.auth.login') }}" method="post">
+            <form action="{{ route($guard.'.auth.login') }}" method="post">
                 @csrf
                 <div class="input-group mb-3">
-                    <input name="email" type="email" class="form-control" placeholder="@lang('dashboard.Email')">
+                    <input name="email" type="text" class="form-control" placeholder="@lang('dashboard.Email or Phone')">
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-envelope"></span>
