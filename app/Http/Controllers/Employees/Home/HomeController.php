@@ -16,6 +16,6 @@ class HomeController extends Controller implements HasMiddleware
     }
 
     public function index(){
-        return view('dashboard.site.home.index');
+        return view('dashboard.employee.home.index');
     }
 }

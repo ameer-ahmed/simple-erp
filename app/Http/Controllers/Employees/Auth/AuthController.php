@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Employees\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Mutual\Auth\LoginRequest;
 use App\Http\Services\Employees\Auth\AuthService;
+use App\Models\Department;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 
@@ -25,7 +26,7 @@ class AuthController extends Controller implements HasMiddleware
     }
 
     public function _login() {
-        return view('dashboard.site.auth.login');
+        return view('dashboard.site.auth.login', ['guard' => 'employee']);
     }
 
     public function login(LoginRequest $request) {
