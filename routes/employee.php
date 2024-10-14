@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Employees\Auth\AuthController;
 use App\Http\Controllers\Employees\Home\HomeController;
+use App\Http\Controllers\Employees\Task\TaskController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -15,4 +16,6 @@ Route::group(['prefix' => 'auth', 'as' => 'auth.'], function () {
 
 Route::group(['middleware' => 'auth:employee'], function () {
     Route::get('/', [HomeController::class, 'index'])->name('/');
+    Route::resource('tasks', TaskController::class)->only(['index']);
+
 });
