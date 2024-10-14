@@ -25,7 +25,7 @@ class AuthController extends Controller implements HasMiddleware
     }
 
     public function _login() {
-        return view('dashboard.site.auth.login');
+        return view('dashboard.site.auth.login', ['guard' => 'manager']);
     }
 
     public function login(LoginRequest $request) {
