@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'Elryad' => 'الرياض',
+    'Simple ERP' => 'Simple ERP',
     'Dashboard' => 'لوحة التحكم',
     'Login' => 'تسجيل الدخول',
     'Logout' => 'تسجيل الخروج',
